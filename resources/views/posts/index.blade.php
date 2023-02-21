@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
+    <title>Crud</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -31,8 +31,25 @@
 
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <h5 class="m-0">Login Sebagai : {{Auth::user()->name}}</h5>
+                            <br/>
+                            @can('isAdmin')
+                                <span class="btn btn-success">Admin</span>
+                                    @elsecan('isOperator')
+                                        <span class="btn btn-info">Operator</span>
+                                    @else
+                                        <span class="btn btn-warning">User Client</span>
+                            @endcan
+                          </li>
                         <a href="{{ route('post.create') }}" class="btn btn-md btn-success mb-3 float-right">New
                             Post</a>
+
+                            <div class="class mt">
+                                <a href="{{ route('logout') }}" class="btn btn-md btn-danger mb-3 float-right">logout</a>
+                            </div>
+
+
 
                         <table class="table table-bordered mt-1">
                             <thead>
@@ -56,7 +73,9 @@
                                                 class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')
+                                            @can('isAdmin')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                            @endcan
                                         </form>
                                     </td>
                                 </tr>
