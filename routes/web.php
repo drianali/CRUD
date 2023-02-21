@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,11 @@ Route::get('/', function () {
 
 
 Route::resource('post', PostController::class);
+
+
+Route::get('login', [LoginController::class, 'login'])->name('login')->middleware('guest');
+Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::get('register', [LoginController::class, 'register']);
+Route::post('register', [LoginController::class, 'store']);
