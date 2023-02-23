@@ -10,8 +10,21 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = PostModel::latest()->get();
-        return view('posts.index', compact('posts'));
+        if(Auth()->user()->role == "admin" ||(Auth()->user()->role == "operator"))
+        {
+            return view('posts.index',[
+                'title' => 'Main Page Admin',
+                'posts' => PostModel::all()
+            ]);
+
+        }else{
+
+            return view('posts.index',[
+                'title' => 'Main Page 1',
+                'posts' => PostModel::where('user_id', Auth()->user()->id)->get()
+            ]);
+
+        }
     }
 
     public function create()
@@ -34,7 +47,8 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'status' => $request->status,
-            'slug' => Str::slug($request->title)
+            'slug' => Str::slug($request->title),
+            'user_id' => Auth()->user()->id
         ]);
 
         if ($post) {

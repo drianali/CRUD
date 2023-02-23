@@ -15,6 +15,7 @@ class CreatePostModelsTable extends Migration
     {
         Schema::create('post_models', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('title');
             $table->text('content');
             $table->string('slug');

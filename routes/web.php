@@ -17,7 +17,7 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::group(['middleware'  => 'revalidate'], function()
